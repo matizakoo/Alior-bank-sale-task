@@ -71,11 +71,6 @@ public class GoodsService {
     }
 
     private void summary(LinkedHashMap<String, Double> summaryList, LinkedHashMap<String, Double> linkedHashMap){
-//        summaryList.add("Total amount: " + sum +"\n");
-//        summaryList.add("Amount to pay: " + (sum - linkedHashMap.values().stream().mapToDouble(Double::doubleValue).sum())+"\n");
-//        for(Map.Entry<String, Double> e: linkedHashMap.entrySet()){
-//            summaryList.add(e.getKey() + " " + e.getValue()+"\n");
-//        }
         summaryList.put("Total amount", sum);
         summaryList.put("Amount to pay", (sum - linkedHashMap.values().stream().mapToDouble(Double::doubleValue).sum()));
         for(Map.Entry<String, Double> e: linkedHashMap.entrySet()){
