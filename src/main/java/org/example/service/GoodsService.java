@@ -1,13 +1,11 @@
 package org.example.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.example.Entity.Goods;
 import org.example.discount.Discount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import java.nio.DoubleBuffer;
 import java.util.*;
 
 public class GoodsService {
@@ -16,7 +14,7 @@ public class GoodsService {
     private ArrayList<Double> promotionalPrice;
     private ArrayList<Double> priceList;
     private LinkedHashMap<String, Double> linkedHashMap;
-    private LinkedList<String> linkedList;
+    private LinkedHashMap<String, Double> summaryList;
     private static final Logger logger = LoggerFactory.getLogger(GoodsService.class);
 
     public GoodsService() {
@@ -25,10 +23,10 @@ public class GoodsService {
         this.promotionalPrice = new ArrayList<>();
         this.priceList = new ArrayList<>();
         this.linkedHashMap = new LinkedHashMap<>();
-        this.linkedList = new LinkedList<>();
+        this.summaryList = new LinkedHashMap<>();
     }
 
-    public ArrayList<Goods> orderCalculator(ArrayList<Goods> list){
+    public LinkedHashMap<String, Double> orderCalculator(ArrayList<Goods> list){
         logger.info("orderCalculator class");
         for(Goods e: list){
             sum += (e.getPrice() * e.getAmount());
@@ -45,9 +43,9 @@ public class GoodsService {
         if(list.size() > discount.PRODUCTS_TO_BE_PROMOTED){
             promotionC(promotionalPrice, linkedHashMap, priceList, list);
         }
-        summary(linkedList, linkedHashMap);
-        System.out.println(linkedList);
-        return list;
+        summary(summaryList, linkedHashMap);
+        printSummary(summaryList);
+        return summaryList;
     }
 
     private void promotionA(ArrayList<Double> promotionalPrice, LinkedHashMap<String, Double> linkedHashMap){
@@ -72,12 +70,22 @@ public class GoodsService {
         linkedHashMap.put("Promotion C", (priceList.get(priceList.size()-discount.PRODUCTS_TO_BE_PROMOTED)) * discount.PRODUCTS_TO_BE_PROMOTED_DISCOUNT);
     }
 
-    private void summary(LinkedList<String> linkedList, LinkedHashMap<String, Double> linkedHashMap){
-        linkedList.add("Total amount: " + sum +"\n");
-        linkedList.add("Amount to pay: " + (sum - linkedHashMap.values().stream().mapToDouble(Double::doubleValue).sum())+"\n");
+    private void summary(LinkedHashMap<String, Double> summaryList, LinkedHashMap<String, Double> linkedHashMap){
+//        summaryList.add("Total amount: " + sum +"\n");
+//        summaryList.add("Amount to pay: " + (sum - linkedHashMap.values().stream().mapToDouble(Double::doubleValue).sum())+"\n");
+//        for(Map.Entry<String, Double> e: linkedHashMap.entrySet()){
+//            summaryList.add(e.getKey() + " " + e.getValue()+"\n");
+//        }
+        summaryList.put("Total amount", sum);
+        summaryList.put("Amount to pay", (sum - linkedHashMap.values().stream().mapToDouble(Double::doubleValue).sum()));
         for(Map.Entry<String, Double> e: linkedHashMap.entrySet()){
-            System.out.println("value: " + e.getValue());
-            linkedList.add(e.getKey() + " " + e.getValue()+"\n");
+            summaryList.put(e.getKey(), e.getValue());
+        }
+    }
+
+    private void printSummary(LinkedHashMap<String, Double> summaryList){
+        for(Map.Entry<String, Double> e: summaryList.entrySet()){
+            System.out.println(e.getKey() + ": " + e.getValue());
         }
     }
 }
