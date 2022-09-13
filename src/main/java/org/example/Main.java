@@ -20,6 +20,6 @@ public class Main {
         goods.add(new Goods("Szafka", 200,2));
         goods.add(new Goods("Klopsiki", 10,1));
         GoodsService goodsService = new GoodsService();
-        goodsService.orderCalculator(goods);
+        goodsService.printSummary(goodsService.orderCalculator(goods));
     }
 }

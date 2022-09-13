@@ -40,11 +40,11 @@ public class GoodsService {
             promotionB(promotionalPrice, linkedHashMap);
         }
         //promotion C
-        if(list.size() > discount.PRODUCTS_TO_BE_PROMOTED){
+        if(list.size() >= discount.PRODUCTS_TO_BE_PROMOTED){
             promotionC(promotionalPrice, linkedHashMap, priceList, list);
         }
         summary(summaryList, linkedHashMap);
-        printSummary(summaryList);
+
         return summaryList;
     }
 
@@ -56,8 +56,8 @@ public class GoodsService {
 
     private void promotionB(ArrayList<Double> promotionalPrice, LinkedHashMap<String, Double> linkedHashMap){
         logger.info("Promotion B");
-        promotionalPrice.add(sum * discount.MORE_THAN_SUM_PRICE_DISCOUNT);
-        linkedHashMap.put("Promotion B", sum * discount.MORE_THAN_SUM_PRICE_DISCOUNT);
+        promotionalPrice.add((double) Math.round((sum * discount.MORE_THAN_SUM_PRICE_DISCOUNT)*100)/100.0);
+        linkedHashMap.put("Promotion B", ((double) Math.round((sum * discount.MORE_THAN_SUM_PRICE_DISCOUNT)*100)/100.0));
     }
 
     private void promotionC(ArrayList<Double> promotionalPrice, LinkedHashMap<String, Double> linkedHashMap, ArrayList<Double> priceList, ArrayList<Goods> list){
@@ -78,7 +78,7 @@ public class GoodsService {
         }
     }
 
-    private void printSummary(LinkedHashMap<String, Double> summaryList){
+    public void printSummary(LinkedHashMap<String, Double> summaryList){
         for(Map.Entry<String, Double> e: summaryList.entrySet()){
             System.out.println(e.getKey() + ": " + e.getValue());
         }
