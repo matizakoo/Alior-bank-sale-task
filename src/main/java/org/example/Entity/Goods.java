@@ -8,10 +8,10 @@ import java.util.ArrayList;
 @Getter
 public class Goods {
     private String nameOfGood;
-    private double amount;
-    private int price;
+    private int amount;
+    private double price;
 
-    public Goods(String nameOfGood, double amount, int price) {
+    public Goods(String nameOfGood, int amount, double price) {
         this.nameOfGood = nameOfGood;
         this.amount = amount;
         this.price = price;

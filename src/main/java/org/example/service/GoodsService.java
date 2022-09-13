@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 public class GoodsService {
-    private static Discount discount;
+    private final Discount discount;
     private double sum;
-    private ArrayList<Double> promotionalPrice;
-    private ArrayList<Double> priceList;
-    private LinkedHashMap<String, Double> linkedHashMap;
-    private LinkedHashMap<String, Double> summaryList;
+    private final ArrayList<Double> promotionalPrice;
+    private final ArrayList<Double> priceList;
+    private final LinkedHashMap<String, Double> linkedHashMap;
+    private final LinkedHashMap<String, Double> summaryList;
     private static final Logger logger = LoggerFactory.getLogger(GoodsService.class);
 
     public GoodsService() {
@@ -57,7 +57,7 @@ public class GoodsService {
     private void promotionB(ArrayList<Double> promotionalPrice, LinkedHashMap<String, Double> linkedHashMap){
         logger.info("Promotion B");
         promotionalPrice.add((double) Math.round((sum * discount.MORE_THAN_SUM_PRICE_DISCOUNT)*100)/100.0);
-        linkedHashMap.put("Promotion B", ((double) Math.round((sum * discount.MORE_THAN_SUM_PRICE_DISCOUNT)*100)/100.0));
+        linkedHashMap.put("Promotion B", (double) Math.round((sum * discount.MORE_THAN_SUM_PRICE_DISCOUNT)*100)/100);
     }
 
     private void promotionC(ArrayList<Double> promotionalPrice, LinkedHashMap<String, Double> linkedHashMap, ArrayList<Double> priceList, ArrayList<Goods> list){
