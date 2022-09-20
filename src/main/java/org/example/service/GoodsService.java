@@ -63,5 +63,6 @@ public class GoodsService {
         for(Map.Entry<String, Double> e: summaryList.entrySet()){
             System.out.println(e.getKey() + ": " + e.getValue());
         }
+
     }
 }
